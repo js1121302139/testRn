@@ -137,6 +137,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-amap3d')
     compile project(':react-native-smart-pull-to-refresh-listview')
     compile project(':react-native-blur')
     compile project(':react-native-video')

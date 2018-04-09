@@ -1,4 +1,4 @@
-import React, { Component,PureComponent } from 'react';
+import React, { Component, PureComponent } from 'react';
 import {
     View,
     Text,
@@ -19,7 +19,7 @@ import {
 
 import ScrollView from '../commonComponent/scroll'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import {PullView} from 'react-native-pull'
+import { PullView } from 'react-native-pull'
 
 import bs from '../../static/bs.png'
 import cd from '../../static/cd.png'
@@ -31,7 +31,7 @@ class GameItem extends PureComponent {
         this.state = {
             data: this.props.title
         }
-        
+
     }
     render() {
         let itemData = this.props.itemData;
@@ -64,7 +64,7 @@ class GameItem extends PureComponent {
             <View style={gameItem.gameItemBox}>
                 <View>
                     <Image source={require('../../static/qiuguan.jpg')}
-                           style={{height: 150, width:350, marginBottom:5,borderRadius:12}}/>
+                        style={{ height: 150, width: 350, marginBottom: 5, borderRadius: 12 }} />
                 </View>
                 <View>
                     <WingBlank size="sm">
@@ -83,26 +83,26 @@ class GameItem extends PureComponent {
 
 }
 
-class GridItem extends Component{
-    constructor(props){
+class GridItem extends Component {
+    constructor(props) {
         super(props);
     }
-    render(){
+    render() {
         const data = this.props.data;
-        return(
+        return (
             <View style={{
-                display:'flex',
-                flex:1,
-                justifyContent:'center',
-                alignItems:'center'
+                display: 'flex',
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center'
             }}>
 
                 <Image style={{
-                    width:30,
-                    height:30,
-                    marginBottom:5
+                    width: 30,
+                    height: 30,
+                    marginBottom: 5
                 }} source={data.icon} />
-                <Text>{data.text }</Text>
+                <Text>{data.text}</Text>
             </View>
         )
     }
@@ -167,20 +167,21 @@ class BallHall extends Component {
                 <View style={style.topFun}>
                     <WingBlank>
                         <Grid data={this.state.data}
-                              square={false}
-                              hasLine={false}
-                              onClick={(el, obj) => {
-                                  Actions[el.page].call()
-                              }}
-                              renderItem={(el,index)=><GridItem data={el}/>}
-                              columnNum={3}/>
+                            square={false}
+                            hasLine={false}
+                            onClick={(el, obj) => {
+                                Actions[el.page].call()
+                            }}
+                            renderItem={(el, index) => <GridItem data={el} />}
+                            columnNum={4} />
                     </WingBlank>
                 </View>
-                <WhiteSpace/>
+                <WhiteSpace />
                 <View style={{
-                    height: 310
-                }}>
-                    <ScrollView ListItem = {GameItem}/>
+                    backgroundColor:'#f00',
+                    height:400
+                 }}>
+                    <ScrollView ListItem={GameItem} />
                 </View>
             </View>
         )
@@ -229,4 +230,4 @@ const style = StyleSheet.create({
 })
 
 
-export default connect(state=>({state}),{login})(BallHall)
+export default connect(state => ({ state }), { login })(BallHall)

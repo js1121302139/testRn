@@ -3,7 +3,8 @@ import {
     View,
     Text,
     StyleSheet,
-    Image
+    Image,
+    TouchableHighlight
 } from 'react-native'
 
 import {
@@ -18,6 +19,7 @@ import {
     List,
     Button
 } from 'antd-mobile'
+import { ImgNull } from '../../common/util';
 
 export default class GameItem extends Component {
     constructor(props) {
@@ -55,21 +57,23 @@ export default class GameItem extends Component {
             }
         })
         return (
-            <View style={gameItem.gameItemBox}>
-                <Image source={{uri: 'https://www.baidu.com/img/bd_logo1.png'}}
-                       style={{height: 150}}/>
-                <View>
-                    <WingBlank size="sm">
-                        <View style={gameItem.title}>
-                            <Text style={gameItem.titleTxt}>福州大学新生篮球比赛(5vs{this.state.data})</Text>
-                        </View>
-                        <Flex justify="between">
-                            <Text style={gameItem.gameTeam}>102参赛人员 10队伍</Text>
-                            <Text style={gameItem.gameDate}>2018年3月26日 - 2018年3月31日</Text>
-                        </Flex>
-                    </WingBlank>
+            <TouchableHighlight onPress={()=>{Actions.leagueInfo()}}>
+                <View style={gameItem.gameItemBox} >
+                    <Image source={ImgNull('')}
+                        style={{height: 150}}/>
+                    <View>
+                        <WingBlank size="sm">
+                            <View style={gameItem.title}>
+                                <Text style={gameItem.titleTxt}>福州大学新生篮球比赛(5vs{this.state.data})</Text>
+                            </View>
+                            <Flex justify="between">
+                                <Text style={gameItem.gameTeam}>102参赛人员 10队伍</Text>
+                                <Text style={gameItem.gameDate}>2018年3月26日 - 2018年3月31日</Text>
+                            </Flex>
+                        </WingBlank>
+                    </View>
                 </View>
-            </View>
+            </TouchableHighlight>
         )
     }
 

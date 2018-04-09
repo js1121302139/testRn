@@ -9,6 +9,7 @@ import {
     Flex,
     Button
 } from 'antd-mobile'
+import { Actions } from 'react-native-router-flux';
 export default class Schedule extends Component{
     render(){
         return(
@@ -29,7 +30,7 @@ export default class Schedule extends Component{
                     <View>
                         <Text>第3节</Text>
                         <Text>05:45</Text>
-                        <Button type="warning" size="small">
+                        <Button type="warning" size="small" onClick={Actions.livePage}>
                             正在直播
                         </Button>
                     </View>

@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 
 import { Flex, Button, WingBlank } from 'antd-mobile'
+import { Actions } from 'react-native-router-flux';
 
 export default class Challenge extends Component{
     render(){
@@ -30,7 +31,7 @@ export default class Challenge extends Component{
                         </Flex>
                         <Flex justify="between">
                             <Text style={style.bottomTxt}></Text>
-                            <Button type="ghost" inline size="small">发起挑战</Button>
+                            <Button type="ghost" inline size="small" onClick={Actions.challengeInfo}>发起挑战</Button>
                         </Flex>
                     </View>
                 </WingBlank>

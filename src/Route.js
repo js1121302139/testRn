@@ -1,27 +1,44 @@
-import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native'
-import { connect } from 'react-redux'
-import { Scene, Router, Modal, Stack, Tabs } from 'react-native-router-flux'
+import React, {Component} from 'react';
+import {View, Text, Image} from 'react-native'
+import {connect} from 'react-redux'
+import {Scene, Router, Modal, Stack, Tabs} from 'react-native-router-flux'
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator';
-import { setToken } from './redux/actionCreater'
+import {setToken} from './redux/actionCreater'
+// 公共的页面
+// 登录页面
+import LoginPage from './component/page/Login'
+// 地图页面
+import Map from '../src/component/commonComponent/map'
+
 // 主要的四个页面
 import Home from './component/page/Home'
 import GameField from './component/page/gameField'
 import BallTeam from './component/page/ballTeam'
 import Me from './component/page/me'
 // 子页面
+// 商城
 import Mell from './component/page/homePage/mell'
-import LoginPage from './component/page/Login'
+// 球场详情
 import HallInfo from './component/page/homePage/ballHallInfo'
+// 球馆
 import BallHall from './component/page/homePage/ballHall'
-import { storageGet } from './component/common/util';
+// 我的详情
+import MeInfo from './component/page/me/meInfo'
+// 挑战赛发起
+import challengeInfo from './component/page/gameFieldPage/challengeInfo'
+// 直播页面
+import LivePage from './component/page/gameFieldPage/livePage'
+// 联赛详情
+import LeagueInfo from './component/page/gameFieldPage/leagueInfo'
+// 我的球队
+import BallTeamList from './component/page/ballTeamPage/ballTeamList'
 
 const TabIcon = (props) => {
     return (
         <View>
             <Image
                 source={!props.focused ? props.image : props.selectedImage}
-                style={[{ height: 27, width: 27, marginTop: 5 }]}
+                style={[{height: 27, width: 27, marginTop: 5}]}
             />
             <Text>
                 {props.title}
@@ -32,11 +49,11 @@ const TabIcon = (props) => {
 
 class Route extends Component {
     render() {
-        
+
         return (
             <Router>
                 <Modal hideNavBar
-                    transitionConfig={() => ({ screenInterpolator: CardStackStyleInterpolator.forFadeFromBottomAndroid })}>
+                       transitionConfig={() => ({screenInterpolator: CardStackStyleInterpolator.forFadeFromBottomAndroid})}>
                     <Stack hideNavBar headerMode='screen' key="root">
                         <Tabs
                             key="tabbar"        // 唯一标识
@@ -59,40 +76,71 @@ class Route extends Component {
                             // }}
                         >
                             <Stack key='page1' initial={true} title="球馆"
-                                image={require("./static/cd.png")}
-                                selectedImage={require("./static/cd.png")}
+                                   image={require("./static/cd.png")}
+                                   selectedImage={require("./static/cd.png")}
                             >
-                                <Scene hideNavBar component={Home} key="test1_key" />
+                                <Scene hideNavBar component={Home} initial={true} key="test1_key"/>
+                                <Scene
+                                    title='商城'
+                                    back={true}
+                                    gesturesEnabled={false}
+                                    onExit={() => console.log('onExit')}
+                                    onLeft={Actions.pop}
+                                    component={Mell}
+                                    key="mell"/>
+                                <Scene
+                                    title="球馆"
+                                    gesturesEnabled={false}
+                                    onExit={() => console.log('onExit')}
+                                    onLeft={Actions.pop}
+                                    component={BallHall}
+                                    key="ballHall"/>
+                                <Scene
+                                    title="详情"
+                                    back={true}
+                                    gesturesEnabled={false}
+                                    onExit={() => console.log('onExit')}
+                                    onLeft={Actions.pop}
+                                    component={HallInfo}
+                                    key="hallInfo"/>
                             </Stack>
                             <Stack key='gameField' title="球赛"
-                                image={require("./static/cd.png")}
-                                selectedImage={require("./static/cd.png")}
+                                   image={require("./static/cd.png")}
+                                   selectedImage={require("./static/cd.png")}
                             >
-                                <Scene hideNavBar component={GameField} key="test1_key" />
+                                <Scene hideNavBar component={GameField} key="test1_key"/>
+                                <Scene component={challengeInfo} key="challengeInfo"/>
+                            </Stack>
+                            <Stack key='FUNBTN' title="FUN"
+                                   image={require("./static/cd.png")}
+                                   selectedImage={require("./static/cd.png")}
+                            >
+                                <Scene hideNavBar component={() => (<View>
+                                    <Text>0000</Text>
+                                </View>)} key="Me"/>
                             </Stack>
                             <Stack key='ballTeam' title="球队"
-                                image={require("./static/cd.png")}
-                                selectedImage={require("./static/cd.png")}
+                                   image={require("./static/cd.png")}
+                                   selectedImage={require("./static/cd.png")}
                             >
-                                <Scene hideNavBar component={BallTeam} key="BallTeam" />
+                                <Scene hideNavBar component={BallTeam} initial={true} key="BallTeam"/>
                             </Stack>
                             <Stack key='Me' title="我的"
-                                image={require("./static/cd.png")}
-                                selectedImage={require("./static/cd.png")}
-                            > 
-                                <Scene hideNavBar component={Me} key="Me" />
+                                   image={require("./static/cd.png")}
+                                   selectedImage={require("./static/cd.png")}
+                            >
+                                <Scene hideNavBar component={Me} initial={true} key="Me"/>
+                                <Scene
+                                    title="球员信息"
+                                    back={true}
+                                    gesturesEnabled={false}
+                                    onExit={() => console.log('onExit')}
+                                    onLeft={Actions.pop}
+                                    component={MeInfo}
+                                    key="meInfo"/>
                             </Stack>
                         </Tabs>
-                        <Stack key="mell">
-                            <Scene
-                                title={this.state}
-                                back={true}
-                                gesturesEnabled={false}
-                                onExit={() => console.log('onExit')}
-                                onLeft={Actions.pop}
-                                component={Mell}
-                                key="Mell" />
-                        </Stack>
+
                         <Stack key="login">
                             <Scene
                                 hideNavBar
@@ -100,25 +148,41 @@ class Route extends Component {
                                 onExit={() => console.log('onExit')}
                                 onLeft={Actions.pop}
                                 component={LoginPage}
-                                key="Login" />
+                                key="Login"/>
                         </Stack>
-                         <Stack key="ballHall">
+                        <Stack key="map">
                             <Scene
+                                hideNavBar
                                 gesturesEnabled={false}
                                 onExit={() => console.log('onExit')}
                                 onLeft={Actions.pop}
-                                component={BallHall}
-                                key="Mell" />
+                                component={Map}
+                                key="Map"/>
                         </Stack>
-                        <Stack key="hallInfo">
+                        <Stack key="livePage">
                             <Scene
-                                title="详情"
+                                back={true}
+                                title="直播"
+                                gesturesEnabled={false}
+                                onExit={() => console.log('onExit')}
+                                onLeft={Actions.pop}
+                                component={LivePage}
+                                key="LivePage"/>
+                        </Stack>
+                        <Stack key="leagueInfo">
+                            <Scene
+                                title="联赛"
                                 back={true}
                                 gesturesEnabled={false}
                                 onExit={() => console.log('onExit')}
                                 onLeft={Actions.pop}
-                                component={HallInfo}
-                                key="HallInfo" />
+                                component={LeagueInfo}
+                                key="LeagueInfo"/>
+                        </Stack>
+                        <Stack
+                            key="ballTeamList"
+                        >
+                            <Scene title="球队列表" back={true} component={BallTeamList} key="ballTeamList"/>
                         </Stack>
                     </Stack>
                 </Modal>
@@ -126,4 +190,5 @@ class Route extends Component {
         )
     }
 }
-export default connect(state=>({state}),{setToken})(Route)
+
+export default connect(state => ({state}), {setToken})(Route)

@@ -1,6 +1,12 @@
 const apiDev = {
     ImgSrc: '',
-    apiSrc: 'http://120.79.196.255:8080/stephen-api/'
+    apiSrc: 'http://120.79.196.255:8080/stephen-api/',
+    ossService: 'http://120.79.196.255:7080/'
+}
+
+const local = {
+    ImgSrc: '',
+    apiSrc: 'http://192.168.0.109:8080/stephen-api/'
 }
 
 
@@ -16,12 +22,12 @@ const getRouteData = (_this) => _this.props.navigation.state.params;
 
 // 网络请求
 
-const fetchData = (url, method = 'POST', config) => {
-    console.log(`请求地址：${url}, 请求参数：${JSON.stringify(config.data)}`)
+const fetchData = (url, method = 'POST', config, requireType = '') => {
+    let UpperCaseMethod = method.toLocaleUpperCase();
     let FetchConfig = ''
-    if (method === 'POST') {
+    if (UpperCaseMethod === 'POST') {
         FetchConfig = {
-            method,
+            method: UpperCaseMethod,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -39,14 +45,25 @@ const fetchData = (url, method = 'POST', config) => {
         });
         url += dataStr = dataStr.substring(0, dataStr.lastIndexOf('&'))
     }
-    fetch(apiDev.apiSrc + url, FetchConfig).then(res => {
+    // 请求地址
+    let queryUrl = ''
+    switch (requireType) {
+        case 'oss':
+            queryUrl = apiDev.ossService + url
+            break;
+        default:
+            queryUrl = apiDev.apiSrc + url
+            break;
+    }
+    console.log(`请求地址：${queryUrl}, 请求参数：${JSON.stringify(config.data)}`)    
+    fetch(queryUrl, FetchConfig).then(res => {
         if (res.ok) {
             return res.json();
         } else {
             throw res;
         }
     }).then(resJson => {
-        console.log(`请求返回数据:`,resJson)
+        console.log(`${url}请求返回数据:`, resJson)
         config.fun_Success(resJson)
     }).catch(err => {
         config.fun_Error(err)
@@ -59,14 +76,13 @@ const storageSave = (key, data) => {
     console.log(key, data)
     storage.save({
         key,
-        data  
+        data
     })
 }
 
 // 获取数据
 
 const storageGet = (key, callBack) => {
-    console.log(key)
     storage.load({
         key: key,
         autoSync: true,
@@ -90,13 +106,15 @@ const storageGet = (key, callBack) => {
 }
 // 更改本地数据
 const setStorageData = (key, data) => {
-    storageGet(key, ret=>{
+    storageGet(key, ret => {
         if (ret === false) {
             console.log('键值错误或者键内容为空')
             return false;
         } else {
             // 更改数据
-            storageSave(key, {...ret, ...data});
+            console.log({ ...data })
+            console.log({ ...ret, ...data }, '------')
+            storageSave(key, { ...ret, ...data });
         }
     })
 }
@@ -128,7 +146,28 @@ const dataCheck = (val, type) => {
     }
 }
 
+// 检测数据是否为空
+const checkDataIsNull = (data, continueKey = []) => {
+    for (item in data) {
+        if (continueKey.indexOf(data[item]) !== (-1)) {
+            continue;
+        }
+        if (data[item] === '' || data[item] === null) {
+            console.log(data)
+            return false
+        }
+    }
+    return true;
+}
 
+// Img is null
+const ImgNull = (url) => {
+    if (url === null || url === '') {
+        return require('../../static/loginBg.png')
+    } else {
+        return { uri: url }
+    }
+}
 export {
     openPage,
     getRouteData,
@@ -136,7 +175,9 @@ export {
     storageSave,
     storageGet,
     setStorageData,
-    dataCheck
+    dataCheck,
+    ImgNull,
+    checkDataIsNull
 }
 
 

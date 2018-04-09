@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux'
 import { InputItem, Flex, Button, WhiteSpace, WingBlank } from 'antd-mobile'
-import { login } from '../../redux/actionCreater'
+import { login , sendMessage} from '../../redux/actionCreater'
 
 class LoginPage extends Component {
     constructor(props) {
@@ -167,10 +167,10 @@ class LoginPage extends Component {
                                 </Flex.Item>
                                 <TouchableHighlight
                                     onPress={() => {
-                                        // store.dispatch(sendMessage({
-                                        //     phoneNum: this.state.phoneNum,
-                                        //     type: this.state.sendType
-                                        // }))
+                                        this.props.sendMessage({
+                                            phone: this.state.phoneNum,
+                                            type: this.state.sendType
+                                        })
                                     }}
                                 >
                                     <View style={styles.Button}>
@@ -226,5 +226,5 @@ class LoginPage extends Component {
     }
 
 }
-export default connect(state => ({ state }),{login})(LoginPage)
+export default connect(state => ({ state }),{login,sendMessage})(LoginPage)
 

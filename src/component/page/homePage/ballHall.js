@@ -12,6 +12,7 @@ import {
 } from 'antd-mobile'
 
 import BallHallItem from '../../commonComponent/hallItem'
+import { Actions } from 'react-native-router-flux';
 // import { openPage } from '../../commonUtil/util'
 export default class BallHall extends Component{
     state = {
@@ -48,7 +49,7 @@ export default class BallHall extends Component{
                     ))}
                 </Carousel>
                 <TouchableOpacity
-                    onPressIn={() => openPage(this,'BallHallInfo')}
+                    onPress={()=>{Actions.push('hallInfo')}}
                 >
                     <BallHallItem />
                 </TouchableOpacity>

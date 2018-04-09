@@ -1,22 +1,23 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import {
     View,
     Text,
     StyleSheet,
-    Image
+    Image,
+
 } from 'react-native'
 
 import {
     Flex,
     List,
-
+    SwipeAction,
     WingBlank
 } from 'antd-mobile'
 
 const ListItem = List.Item;
 
 class Player extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
 
     }
@@ -32,7 +33,7 @@ class Player extends Component {
         return (
             <WingBlank>
                 <Flex>
-                    <Image style={style.playerImg} source={{uri: 'https://www.baidu.com/img/bd_logo1.png'}}/>
+                    <Image style={style.playerImg} source={{ uri: 'https://www.baidu.com/img/bd_logo1.png' }} />
                     <Flex.Item>
                         <Flex justify='between'>
                             <Text style={style.playerName}>{this.props.item.name}</Text>
@@ -43,6 +44,7 @@ class Player extends Component {
                         </Flex>
                     </Flex.Item>
                 </Flex>
+
             </WingBlank>
 
         )
@@ -96,8 +98,8 @@ export default class AveragingData extends Component {
                     </WingBlank>
                 </List>
                 <List>
-                    <ListItem extra='添加' platform={{color: '#999'}}>球队阵容</ListItem>
-                    {[{name:'hhh'}].map(item=><Player key={item}rr item={item}/>)}
+                    <ListItem extra='管理' platform={{ color: '#999' }}>球队阵容</ListItem>
+                    {[{ name: 'hhh' }].map(item => <Player key={item} rr item={item} />)}
                 </List>
             </View>
         )

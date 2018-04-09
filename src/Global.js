@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import Storage from 'react-native-storage'
-import {fetchData, storageGet, storageSave, setStorageData, dataCheck} from './component/common/util'
+import {fetchData, storageGet, storageSave, setStorageData, dataCheck,ImgNull,checkDataIsNull} from './component/common/util'
+import { dataDictionary } from './component/common/fetchDictionary'
+
 import {Actions} from 'react-native-router-flux'
 import {AsyncStorage} from 'react-native'
 import {connect} from 'react-redux'
@@ -35,4 +37,16 @@ global.reduxConnect = connect;
 // 数据检测
 global.dataCheck = dataCheck;
 
+// 图片地址为空
+global.ImgNull = ImgNull
+// 网络请求成功返回值编码
+global.retTrue = 0
+// 判断对象中的值是否为空
+global.checkDataIsNull = checkDataIsNull
+
+// 获取数据字典
+global.dataDictionary = dataDictionary
+
+// 网络请求分页大小
+global.pageSize = 20
 
